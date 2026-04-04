@@ -405,7 +405,79 @@ a {
 }
 ```
 
+**Background Images**
 
+Properties
 
+* `background-size`
+* `background-repeat`
+* `background-position`
+* `background-attachment`
 
+`background-image` example:
 
+```html
+<style>
+  body {
+    background-image: url("https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg");
+  }
+</style>
+```
+
+`contain` will scale the image as large as possible without cropping or stretching.;
+See documentation for other values of each property (key).
+```html
+<style>
+  body {
+    background-image: url("https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg");
+    background-size: contain;
+    min-height: 100px;
+  }
+</style>
+```
+
+Accessibility concerns for background:
+
+- Sufficient contrast ratio of 4.5:1 for normal text and 3:1 for large text.
+
+**Design**
+
+Def Layout
+
+How visual elements are arranged on a screen/page.
+
+Def Alignment
+
+How elements are placed in relation to one another.
+
+Def Composition
+
+Arranging elements to create a harmonious design.
+
+Def Balance
+
+How visual weight is distributed within a composition. i.e. You can 
+create an balance through symmetrical or asymmetrical arrangements.
+A balanced design feels harmonious.
+
+Def Hierarchy
+
+Order of importance in a design. You can implement visual hierarchy with
+size, color, contrast, alignment, white space, and even typography.
+
+**User Research**
+
+Net Promoter Score - Measures how likely your users are to recommend
+your product to a friend.
+
+Breadcrumbs - If you have a complex site, then you can have a a nav bar or footer to show the user where they are.
+
+Cards - Populat in e-commerce, social media and news sites; Good for displaying information in a structured way. Each card should have a minimal design, not too cluttered.
+
+Progress indicators - Let users know how far they are into the process, and what's left t odo; i.e. In your grad apps, there's a nav bar with the steps. It gets filled with color when you're done and greyed out if not.
+
+CTA - A Call-to-Action: Usually a button that's highlighted (high contrast) for the user to proceed with the next step, i.e. "Proceed to Checkout" if it's a e-commerce site.
+
+Progressive Disclosure - Allow users to select what they want to see, usually information that is most relevant for them at that moment. An example would be like a "more details" button. It is desirable to provide a single, clear access point to additional informtiaon, so don't have too many "More Details" buttons.
+
+Design Briefs - A document that outlines the objectives, goals and requirements of a project. 
