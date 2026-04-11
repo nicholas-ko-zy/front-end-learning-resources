@@ -46,6 +46,8 @@ Example folder structure for a HTML and CSS project.
 └── README.md
 ```
 
+Associating `<labels>` and `<input>`: the `for` attribute of the `<label>` must match the `id` attribute of the `<input>`.
+
 # CSS
 
 ## Basics
@@ -64,7 +66,7 @@ Property: CSS identify that specidies which feature is being styled. (i.e. backg
 
 Example:
 
-```
+```CSS
 p {
   color: blue;
 }
@@ -481,3 +483,269 @@ CTA - A Call-to-Action: Usually a button that's highlighted (high contrast) for 
 Progressive Disclosure - Allow users to select what they want to see, usually information that is most relevant for them at that moment. An example would be like a "more details" button. It is desirable to provide a single, clear access point to additional informtiaon, so don't have too many "More Details" buttons.
 
 Design Briefs - A document that outlines the objectives, goals and requirements of a project. 
+
+**Absoulte and relative units**
+
+A pixel, `px`, is a 1/96th of an inch. It always will be, regardless of the screen size.
+
+Generally you use pixels if you want precise control over element dimensions, like margins or padding.
+
+Other types of absolute units.
+
+* The `in` (inches) unit, which is equal to 96px
+* The `cm` (centimeters) unit, which is equal to 25.2/64 of an inch
+* The `mm` (millimeters) unit, which is equal to 1/10th of a centimeter
+* The `q` (quarter-millimeters) unit, which is equal to 1/40th of a centimeter
+* The `pc` (picas) unit, which is equal to 1/6th of an inch
+* The `pt` (points) unit, which is equal to 1/72th of an inch
+
+Percentages - i.e. `width: 50%`; Can be used for
+- Scaling images or container heights and widths
+- Adjusting the position of stuff, using the `transform` property.
+  ```CSS
+  .centered {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 300px;
+  height: 300px;
+  background-color: red;
+  }
+  ```
+  ^top is wrt to the container. i.e. Make this 50% of its container.
+
+  ^transform is wrt the element itself. i.e. Move this up 50% of the shape's height.
+
+`ems`: Relative to the font size of the element. i.e. if your `<p>` tag already
+has a font size of `20px` and you specify its `margin-bottom` property to be `1.5em`, then
+you're specifying `margin-bottom: 30px` since $20 \times 1.5 = 30$.
+
+Use case for `ems`: For ensuring modular components like buttons or cards scale
+relative to font size. So you can specify their properties with the `em` unit.
+
+`rems`: Think of it as a universal scaler. It will scale your text relative to the
+html tag, and so scale proportionally to the browser settings. 
+
+i.e. 
+```CSS
+.para {
+  font-size: 1.2rem;
+  margin-bottom: 1.5em;
+  border: 2px solid red;
+}
+```
+
+`vh` and `vw`: Viewport-relative units, scale elements based on dimensions of the browser windows. A viewport is the visible area of the browser window, used to match content with the device. Like mobile vs desktop.
+
+`1vh`: 1%of the viewport height. 
+
+```CSS
+h1 {
+  font-size: 5vw;
+}
+```
+^ Means that the font size of your `<h1>` will always be 5% of the viewport's width.
+
+Use `calc()` when you want to mix relative units.
+```CSS
+ #div1 {
+  position: absolute;
+  left: 50px;
+  width: calc(100% - 100px);
+  border: 1px solid black;
+  background-color: yellow;
+  padding: 5px;
+  text-align: center;
+}
+```
+
+The width is 100% minus 100 pixels. Remember to add whitespace around the operands.
+
+**Pseudo-classes**
+CSS keywords that allow you select a specific state of a HTML element.
+i.e. A link only when it's active. (see below)
+```CSS
+button:active {
+  background: greenyellow;
+}
+```
+or first child/last child of an element (tree-structural pseudo-classes)
+```CSS
+.container p:first-child {
+  background: lightcoral;
+  padding: 0.4rem;
+}
+```
+
+```CSS
+.container p:last-child {
+  background: lightcoral;
+  padding: 0.4rem;
+}
+```
+Other pseudo-classes
+
+- `:focus`
+- `:first-of-type`
+- `:last-of-type`
+- `:nth-of-type`
+- `:modal`
+- `:enabled`
+- `:checked`
+- `:required, and more.`
+
+You can check out input pseudo-classes to guide users on the state of their
+input. I like `:hover` and `focus`
+
+![](./img/hover_pseudo_class.gif)
+![](./img/focus_pseudo_class.gif)
+
+List of tree-structural pseudo-classes:
+
+* `:root`
+* `:empty`
+* `:nth-child(n)`
+* `:nth-last-child(n)`
+* `:first-child`
+* `:last-child`
+* `:only-child`
+* `:nth-of-type`
+* `:first-of-type`
+* `:last-of-type`
+* `:only-of-type`
+
+Functional pseudo-classes
+
+- `:is()`: For style group of elements that share some but not all characteristics.
+  ```CSS
+  :is(button, a.button, input[type='submit'], input[type='reset']) {
+    background-color: darkblue;
+    color: white;
+    border: 1px solid darkblue;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  :is(button, a.button, input[type='submit'], input[type='reset']):hover {
+    background-color: blue;
+    border-color: blue;
+  }
+  ```
+
+- `:where()`: Grouping selectors, but specificity is lowest priority
+  ```CSS
+  :where(h1, h2, h3) {
+  margin: 0;
+  padding: 0;
+  }
+  ```
+- `:has()`: Styling a parent element based on its children's states.
+  ```CSS
+  article:has(h2) {
+    border: 2px solid hotpink;
+  }
+  ```
+  ^ Applies a 2px hotpink border to any article that has a h2 child.
+- `:not()`: Select based on something the element does *not* have.
+  ```CSS
+  button:not(.primary) {
+  background-color: grey;
+  }
+  ```
+  ^ Makes buttons grey if they are *not* primary buttons.
+
+**Pseudo-elements**
+Recall- Single colon is for pseudo-class, but now double colon is for pseudo-elements.
+
+```CSS
+selector::pseudo-element {
+  property: value;
+}
+```
+
+You need a originator (which is a like a reference) element when you write pseudo-elements. Pseudo-elements cannot exist independently.
+
+```CSS
+.cta-button {
+  background-color: lightseagreen;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.cta-button::before {
+  content: "⭐";
+  position: absolute;
+  left: 3px;
+  top: 8px;
+  font-size: 0.75rem;
+}
+```
+
+^ Adds a ⭐ before the text for the `cta-button` class.
+
+**Colors**
+Colors can be represented through color models, i.e. RGB model, HSV (hue, saturation, value) model, HSL (hue, saturation, lightness) model. <- Two popular ways to represent a spectrum of colors.
+
+Analogous color schemes create cohesive and soothing experiences. They have analogous colors, which are adjacent to each other in the color wheel.
+
+Complementary color schemes create high contrast and visual impact. Their colors are located on the opposite ends of the color wheel, relative to each other.
+
+RGB color wheel: Complementary colors are located at the opposite ends of the wheel.
+
+RGM in CSS
+```CSS
+element {
+  color: rgb(red, green, blue);
+}
+```
+There's also `rgba(red, green, blue, alpha)`.
+
+HSL in CSS
+```CSS
+element {
+  color: hsl(hue, saturation, lightness);
+}
+```
+Hue is an angle on the color wheel, which ranges from 0 to 360.
+Also you can add the `a` behind to get the alpha.
+
+A hex code is a six-charactern string that represents color in the RGB color model.
+Hex - base-16 numbering system which uses digits `0` to `9` and letters `A` to `F`.
+
+Each hex starts with a `#` and is followed by 6 characters.
+
+Each pair in the hex is for R, G and B. i.e. #RRGGBB. Then `00` is the lowest intensity, and `FF` is the highest intensity.
+
+**Color Gradients**
+Two types: 
+1. Linear (single direction)
+2. Radial (from center of element, in all directions i.e. circular or elliptical)
+
+```CSS
+.linear-gradient {
+  background: linear-gradient(to right, red, blue);
+  height: 40vh;
+}
+```
+^ `to right` is the direction of the color gradient.
+
+
+```CSS
+.custom-radial-gradient {
+  background: radial-gradient(ellipse at top left, red, blue);
+  height: 40vh;
+}
+```
+`ellipse at top left`: You can specify the starting point and shape of your radial color gradient.
+
+
+
