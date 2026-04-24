@@ -756,3 +756,383 @@ You can also specify specific color stops at precist points by adding percentage
 }
 ```
 
+**Styling Text Inputs**
+
+- Remember to have enough contrast
+- Remember to add placeholder
+- Input should scale accordingly when user zooms the page
+- Use Javascript to update the error state, i.e. invalid email address
+
+`appearance: none` to remove default browser styling and allow custom styling.
+
+Check out input[type="color"] <- HTML, CSS native color picker. Cool!
+
+input[type="date"]: Shows a calendar
+
+
+**Overflow**
+
+The way of handling content that exceeds the size of its containing element.
+i.e. Text content of a div element overflowing from its borders.
+
+Overflow happens in the x and y dimensions. 
+
+Values for overflow properties:
+
+- `hidden`
+- `scroll`
+- 
+
+i.e.
+```CSS
+div {
+  height: 200px;
+  overflow-y: hidden;
+}
+```
+
+`transform` property: Modify visual presentation of elements without affecting
+the layout of other elements. (2D or 3D transforms)
+
+Transform functions:
+- `translate()`
+- `rotate()`
+- `scale()`
+
+i.e.
+```CSS
+.box {
+  transform: translate(50px, 50px) rotate(45deg) scale(1.5);
+}
+```
+
+**CSS Box Model**
+
+Every element is surrounded by a box, consisting of four elements
+
+1. content area
+   
+   The innermost part of the box; contains like text or images
+
+2. padding
+   
+   The area immediately after the content area; Space between content area and
+   border
+
+3. border
+   
+   Outer edge or outline of an element in the CSS box model
+
+4. margin
+   
+   Space outside the border of an element; Distance between an element and
+   other elements around it.
+
+Margin Collapsing is a behaviour that occurs when vertical margins of adjacent
+elements overlap
+
+For example, if you have two boxes, box 1 which sits on top of box 2.
+
+If box 1 has a `margin-bottom` property set and box 2 has a `margin-top` property
+set, there will be a clash.
+
+i.e.
+```CSS
+.box1 {
+  margin-bottom: 20px;
+  background-color: lightblue;
+}
+.box2 {
+  margin-top: 30px;
+  background-color: lightgreen;
+}
+```
+
+^ instead of 20 + 30 = 50px of space; The margin will collapse to 30 pixels, which
+is the larger of the two margins.
+
+
+`box-sizing` can be set to `content-box` or `border-box`.
+
+As the name suggests `content-box` is used for precise control over the content
+area, does not control padding, border or margin. i.e. When you set width and height
+for `content-box`, you are only setting the size of the content.
+
+For `border-box`, the width and height you set will include the element's content,
+padding, and border (But not margin); Use `border-box` to make the element's total size
+stay fixed even if padding or borders change. Helpful for responsive layouts.
+
+
+```CSS
+* {
+  box-sizing: border-box;
+}
+```
+
+CSS reset - remove all or some of the default formatting given by web browsers.
+
+You can create a custom CSS reset to have a consistent theme for your whole
+website.
+
+Examples of third part CSS resets:
+
+1. `Normaliza.css`
+2. `sanitize.css`
+
+**CSS Filter Property**
+
+CSS `filter` property is for aplying graphical effects to elements on a web page.
+
+General structure of `filter` property:
+```CSS
+selector {
+  filter: function(amount);
+}
+```
+
+Example of using a combination of filter functions.
+```CSS
+img {  
+  filter: contrast(150%) brightness(110%) sepia(30%);  
+}
+```
+Filters:
+
+1. `blue`
+2. `brightness`
+3. `grayscale`
+4. `sepia`
+5. `hue-rotate`
+6. `constrast`
+7. `invert`
+8. `saturate`
+
+
+**Flexbox**
+
+Flex container: An HTML element with a flex layout; Can arrange and align elements 
+in various ways within a flex container. 
+
+Flex item: Direct children of a flex container. 
+
+Other flex properties
+1. `flex-direction` 
+2. `justify-content` 
+3. `align-items` 
+4. `flex-wrap`
+
+Each flex container has two axes: 
+- The main axis
+- The cross axis (perpendicular to the main axis)
+
+`flex-direction`
+- `flex-direction: row-reverse;` 
+- `flex-direction: column;` 
+- `flex-direction: column-reverse;`
+
+
+`flex-wrap`
+
+^Determines how flex items are wrapped within a flex container to fit the available space.
+- `flex-wrap: nowrap;`
+- `flex-wrap: wrap;`
+- `flex-wrap: wrap-reverse;`
+
+`justify-content`
+
+^Aligns child elements along the main axis of the flex container.
+-  `justify-content: flex-start;`
+-  `justify-content: flex-end;`
+-  `justify-content: center;`
+-  `justify-content: space-between;`
+-  `justify-content: space-around;`
+-  `justify-content: space-evenly;`
+  
+`align-items`
+
+^Distributes items along the cross axis
+- `align-items: center;`
+- `align-items: flex-start;`
+- `align-items: flex-end;`
+- `align-items: stretch;`
+
+
+`align-self`
+
+^Assign different alignment on cross axis to an individual flex item.
+- `align-self: stretch;`
+- `align-self: center;`
+- `align-self: flex-end;`
+
+`flex-flow`
+
+^Shorthand for `flex-direction` and `flex-wrap`.
+- `flex-flow: column wrap-reverse;`
+
+**Typography**
+
+The art of choosing the right fonts and format to make text visually appealing and
+easy to read.
+
+"Type" - how individual characters are designed and arranged. 
+
+"Typeface" - overall design and style of a set of characters, numbers and symbols.
+
+"Font": A variation of a typeface with specific characteristics like size, weight, style and width.
+
+- The baseline is the imaginary line on which most characters rest.
+- The cap height is the height of uppercase letters, measured from the baseline to the top.
+- The x-height is the average height of lowercase letters, excluding ascenders and descenders.
+- Ascenders are the parts of lowercase letters that extend above the x-height, such as the tops of the letters h, b, d, and f.
+- Descenders are the parts of lowercase letters that extend below the baseline, such as the tails of y, g, p, and q.
+
+Best practices for working with typography:
+
+- Readability: Large fonts, short lines. Use font size for visual hierarchy.
+- Add option to increase font size.
+
+Font-family: Group of fonts that share a common design.
+
+at-rules:  Can be used to define various aspects of the stylesheet like
+media queries, keyframes, font faces and more.
+
+General format
+```CSS
+@font-face {
+  /* Descriptors */
+}
+```
+
+Specific example to define custom fonts.
+```CSS
+@font-face {
+  font-family: "MyCustomFont"; 
+  src: url("path/to/font.woff2") format("woff2"),
+    url("path/to/font.otf") format("opentype") tech(color-COLRv1),
+    url("path/to/font.woff") format("woff");
+}
+```
+
+**Working with external fonts**
+Two examples of externally hosted font sources:
+- Google Font
+- Font Squirrel
+
+An example of listing out different google fonts.
+
+HTML:
+```HTML
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<p class="roboto-thin">roboto-thin</p>
+<p class="roboto-light">roboto-light</p>
+<p class="roboto-regular">roboto-regular</p>
+<p class="roboto-medium">roboto-medium</p>
+<p class="roboto-bold">roboto-bold</p>
+<p class="roboto-black">roboto-black</p>
+
+<p class="roboto-thin-italic">roboto-thin-italic</p>
+<p class="roboto-light-italic">roboto-light-italic</p>
+<p class="roboto-regular-italic">roboto-regular-italic</p>
+<p class="roboto-medium-italic">roboto-medium-italic</p>
+<p class="roboto-bold-italic">roboto-bold-italic</p>
+<p class="roboto-black-italic">roboto-black-italic</p>
+```
+
+CSS:
+```CSS
+.roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.roboto-light {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.roboto-black {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.roboto-thin-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.roboto-light-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.roboto-regular-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.roboto-medium-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.roboto-bold-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.roboto-black-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+```
+
+`text-shadow`
+
+```CSS
+p {
+  text-shadow:
+   3px 2px 3px #00ffc3,
+   -3px -2px 3px #0077ff,
+   5px 4px 3px #dee7e5;
+}
+```
+
+First value controls the `X` offset and second value controls the `Y` offset., third is the blur radius of the shadow, last is the color (can be put and the front or the back).
+
+You can have multiple `text-shadow` layers, it will be applied from the top to the bottom.
+
+
+
+
+
