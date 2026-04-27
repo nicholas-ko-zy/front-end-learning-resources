@@ -769,7 +769,6 @@ Check out input[type="color"] <- HTML, CSS native color picker. Cool!
 
 input[type="date"]: Shows a calendar
 
-
 **Overflow**
 
 The way of handling content that exceeds the size of its containing element.
@@ -1131,6 +1130,58 @@ p {
 First value controls the `X` offset and second value controls the `Y` offset., third is the blur radius of the shadow, last is the color (can be put and the front or the back).
 
 You can have multiple `text-shadow` layers, it will be applied from the top to the bottom.
+
+**Color contrast checking**: [WebAIM's Color Contrast Checker](https://webaim.org/resources/contrastchecker/). Compare your text (foreground) against the background color (background).
+
+**Hiding Content**:
+
+- `display: none;`: Removes the content both visually and from the accessibility tree, so screen readers won't access the content.
+- `visibility: hidden`: Hides the content visually but still lets the element occupy space on the page. Also removes the content from the accessibility tree.
+- `.sr-only`: CSS class that hides content visually but keeps it accessibile to screen readers.
+- `hidden`: An attribute you can add to your element tags, i.e. `<p hidden> </p>`, hides content both visually and from accessibility tree.
+
+
+**Floats**: To allow text to wrap around an element, like an image. Take an element out of the normal document flow and push it to the left or right of the container. 
+
+**Relative Positioning**: Assing the position of elements relative to another element.
+
+**Absolute Positioning**: Takes an element out of the normal document flow and make it behave independently from other elements. i.e useful for creating elements that track the user's POV - tooltips, dropdown menus etc.
+
+```CSS
+.positioned {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background-color: coral;
+}
+```
+
+**Fixed and Sticky Positioning**: `fixed` removes the element from the normal document flow, and places it relative to the viewport. i.e . for nav bars that need to be visible at all times.`sticky` is a hybride of relative and fixed positioning; Stays within the flow of the doc, but once the user scrolls and certain point, it switches to `fixed` behaviour. 
+
+Example of a fixed header element
+```CSS
+h1 {
+  position: fixed;
+  top: 0;
+  width: 500px;
+  background: white;
+  padding: 10px;
+  border-bottom: 2px solid #ccc;
+}
+```
+
+Difference between `fixed` and `absolute` is the reference point. `fixed` positions the element relative to the viewport while `absolute` positions the element relative to the nearest positioned ancestor.
+
+**Z-Index**: `z-index` controls vertical stacking order of positioned elements. Works for all position values except `static` (`relative`, `absolute`, `fixed`). Default `z-index` is zero. 
+
+
+
+
+
+
+
+
+
 
 
 
