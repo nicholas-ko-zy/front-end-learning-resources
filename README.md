@@ -1143,7 +1143,9 @@ You can have multiple `text-shadow` layers, it will be applied from the top to t
 
 **Floats**: To allow text to wrap around an element, like an image. Take an element out of the normal document flow and push it to the left or right of the container. 
 
-**Relative Positioning**: Assing the position of elements relative to another element.
+^ Related to `float` is `clear`, [The `clear` CSS property sets whether an element must be moved below (cleared) floating elements that precede it.](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/clear) In other words, determine if elements wrap or don't wrap the floated content.
+
+**Relative Positioning**: Assigning the position of elements relative to its original position.
 
 **Absolute Positioning**: Takes an element out of the normal document flow and make it behave independently from other elements. i.e useful for creating elements that track the user's POV - tooltips, dropdown menus etc.
 
@@ -1172,7 +1174,7 @@ h1 {
 
 Difference between `fixed` and `absolute` is the reference point. `fixed` positions the element relative to the viewport while `absolute` positions the element relative to the nearest positioned ancestor.
 
-**Z-Index**: `z-index` controls vertical stacking order of positioned elements. Works for all position values except `static` (`relative`, `absolute`, `fixed`). Default `z-index` is zero. 
+**Z-Index**: `z-index` controls vertical stacking order of positioned elements. Works for all position values except `static` (`relative`, `absolute`, `fixed`). Default `z-index` is zero. Elements with higher `z-index` will be placed in front.
 
 
 
