@@ -1172,20 +1172,251 @@ h1 {
 }
 ```
 
+List of position properties
+- `top`
+- `right`
+- `bottom`
+- `left`
+
 Difference between `fixed` and `absolute` is the reference point. `fixed` positions the element relative to the viewport while `absolute` positions the element relative to the nearest positioned ancestor.
 
 **Z-Index**: `z-index` controls vertical stacking order of positioned elements. Works for all position values except `static` (`relative`, `absolute`, `fixed`). Default `z-index` is zero. Elements with higher `z-index` will be placed in front.
 
 
+**clearfix hack**
+```CSS
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+```
 
 
+**Attribute Selectors**
+Attribute selectors allow you to target HTML elements based on their attributes. i.e.
+to style all links with a `href` attribute.
+
+* To specify which attribute you are select, use `[]`
+
+i.e.
+```CSS
+a[href][title] {
+  display:block;
+  color: green;
+}
+```
+
+* To select attributes with space delimited strings i.e.
+```HTML
+<a href="https://example.com" class="btn primary large">Visit Example Site</a>
+```
+^ There's the word `primary` in the class attribute.
+
+```CSS
+a[class~="primary"] {
+  color: red;
+  font-weight: bold;
+}
+```
+^ Looks like a sorta regex slicer.
+
+* To select attribute values which are prefixed by a specific value use the `[attr^=value]` syntax
+```HTML
+<a href="https://example.com" class="btn primary large">Visit Example Site</a>
+```
+^ Contains the href beginning with `"https://"`
+
+```CSS
+a[href^="https://"] {
+  color: green;
+  text-decoration: underline;
+}
+```
+
+* To target attribute values that end with a specific value use, `[attr$=value]`
+```HTML
+<a href="https://example.com">Visit Example Site</a>
+```
+^ `href` ending with `.com`.
+```CSS
+a[href$=".com"] {
+  color: darkgreen;
+  text-decoration: underline dotted;
+}
+```
+
+* To select based on language attributes (i.e. different language, apply different styles): you can do `p[lang="YOUR_LANGUAGE_NAME"]` or `p[data-lang="YOUR_LANGUAGE_NAME"]`
+
+* Attribute selecting for ordered list with type attriute
+  * First of, ordered list have a type attribute to change what kind of bullet point style you have
+    i.e.
+    * `1` for numerical lists (such as 1, 2, 3, ...),
+
+    * `A` for uppercase alphabetical lists (such as A, B, C, ...),
+
+    * `a` for lowercase alphabetical lists (such as a, b, c, ...),
+
+    * `I` for uppercase Roman numerals (such as I, II, III, ...),
+
+    * `i` for lowercase Roman numerals (such as i, ii, iii, ...).
+  * Then you can select the type using `ol[type="YOUR_TYPE"]`
+    ```HTML
+    <ol type="A">
+      <li>Item 1</li>
+      <li>Item 2</li>
+    </ol>
+    ```
+
+    ```CSS
+    ol[type="A"] {
+      color: purple;
+      font-weight: bold;
+    }
+    ```
+
+The `clip` CSS property defines a visible portion of an element. 
+
+```CSS
+/* Keyword value */
+clip: auto;
+
+/* <shape> values */
+clip: rect(1px, 10em, 3rem, 2ch);
+
+/* Global values */
+clip: inherit;
+clip: initial;
+clip: revert;
+clip: revert-layer;
+clip: unset;
+```
+For the rect function: `rect(<top>, <right>, <bottom>, <left>)`
 
 
+span[class~="sr-only"] {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  width: 1px !important;
+  position: absolute !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  padding: 0 !important;
+  margin: -1px !important;
+}
+
+**Responsive Wed Design** : Key is adaptive.
+- Flexbox
+- Grid
+- `calc()` function
+- `srcset` and `picture` to serve different image files based on device capabilities.
+Both to resize elements to make sure overflow doesn't happen.
+
+**Media Queries**
+Query the user's device properties/browser, to customise the presentation of the webpage.
+
+How it works is that it sets a condition of the media type, and if the conditions evaluate true then 
+the corresponding styles are applied.
+
+Structure of a media query:
+```CSS
+@media mediatype and (feature: value) {
+  /* CSS rules go here */
+}
+```
+Commonly used media types
+
+* `all` is suitable for all devices. This is the default if no media type is specified.
+* `print` is intended for paged material and documents viewed on a screen in print preview mode.
+* `screen` is intended primarily for screens.
+
+Features of mediatypes:
+* `width` and `height` 
+  ```CSS
+  @media screen and (min-width: 768px) {
+    /* Styles for screens at least 768px wide */
+  }
+  ```
+
+* `aspect-ratio`: the ratio between the width and the height of the viewport
+  ```CSS
+  @media screen and (aspect-ratio: 16/9) {
+    /* Styles for screens with a 16:9 aspect ratio */
+  }
+  ```
+
+* `orientation`: Indicates if device is in landscape or portait orientation.
+  ```CSS
+  @media screen and (orientation: landscape) {
+    /* Styles for landscape orientation */
+  }
+  ```
+
+* `resolution`: The resolution of the output device in dots per inch (dpi) or dots per centimeter (dpcm)
+  ```CSS
+  @media screen and (min-resolution: 300dpi) {
+    /* Styles for high-resolution screens */
+  }
+  ```
+
+* `hover`: Test if your input device can hover over stuff (touch screen phones probably cannot)
+  ```CSS
+  @media (hover: hover) {
+    /* Styles for devices that support hover */
+  }
+  ```
+
+* `prefer-color-scheme`: Detects if user requested light/dark color theme
+  ```CSS
+  @media (prefers-color-scheme: dark) {
+    /* Styles for dark mode */
+  }
+  ```
+
+* Mixing/matching media queries with `and`, `not`, `only` and `,` operators
+  ```CSS
+  @media screen and (min-width: 768px) and (orientation: landscape) {
+    /* Styles for landscape screens at least 768px wide */
+  }
+  ```
+
+  ```CSS
+  @media screen and (min-width: 768px), print {
+    /* Styles for screens at least 768px wide OR for print */
+  }
+  ```
+  `,` (comma) functions like an "or" operator.
+
+Typically you'd create a basestyle for mobile devices then use media queries to enhance the layout for larger screens. (mobile-first design)
 
 
+**Media Breakpoints**: A threshold to differentiate between mobile and tablet layouts, i.e. setting a breakpoint at 768 pixels.(see HTML and CSS below)
 
+Example: 
+```HTML
+<link rel="stylesheet" href="styles.css">
+<div>
+  <h1>Responsive Design</h1>
+  <p>This is a simple example of responsive design using media queries.</p>
+</div>
+```
 
+```CSS
+/* Styles for screens wider than 768px */
+@media screen and (min-width: 768px) {
+  body {
+    font-size: 1.125rem;
+  }
+}
+```
 
+^ The CSS sets the threshold at 768 pixels, if the threshold is crossed, the font-sized is increased to 1.125rem.
 
+Popular breakpoints (according to FCC)
+* Small devices (smartphones): up to 640px.
+* Medium devices (tablets): 641px to 1024px.
+* Large devices (desktops): 1025px and larger.
 
-
+**Mobile-first web design**: Designing webpages first for mobile; became popular only recently. 
