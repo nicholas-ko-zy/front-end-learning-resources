@@ -1368,7 +1368,7 @@ Features of mediatypes:
   }
   ```
 
-* `prefer-color-scheme`: Detects if user requested light/dark color theme
+* `prefers-color-scheme`: Detects if user requested light/dark color theme
   ```CSS
   @media (prefers-color-scheme: dark) {
     /* Styles for dark mode */
@@ -1419,4 +1419,59 @@ Popular breakpoints (according to FCC)
 * Medium devices (tablets): 641px to 1024px.
 * Large devices (desktops): 1025px and larger.
 
-**Mobile-first web design**: Designing webpages first for mobile; became popular only recently. 
+**Mobile-first web design**: Designing webpages first for mobile; became popular only recently. Reason being a lot of internet traffic comes from mobile devies (no statistics for this).
+
+In practice, this looks like starting with a mobile base style, then use media queries with `min-width` to modify styles for largers screens.
+
+**CSS Custom Properties**: AKA CSS variables, contain specific values to be reused throughout a document. Allows for more efficient, maintainable and flexible stylesheets.
+
+Example:
+```CSS
+:root {
+  --main-color: #3498db;
+}
+```
+
+Use `--` to begin declaring a custom property.
+
+Say you want to call a variable further down in your stylesheet (i.e. in your button)
+
+```CSS
+:root {
+  --main-color: #3498db;
+}
+
+.button {
+  background-color: var(--main-color);
+}
+```
+
+You define it at `root` then call it in `button`.
+
+CSS variables with fallback values
+
+```CSS
+:root {
+  --text-color: green;
+}
+
+.text {
+  color: var(--text-color, green);
+}
+```
+
+You can use CSS variables to group styles for themes, i.e. light or dark themes.
+
+CSS variables can reference other CSS variables. 
+
+Example:
+```
+:root {
+  --primary-color: #3498db;
+  --button-bg: var(--primary-color);
+}
+
+button {
+  background-color: var(--button-bg);
+}
+```
