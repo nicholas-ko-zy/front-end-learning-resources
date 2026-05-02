@@ -1475,3 +1475,87 @@ button {
   background-color: var(--button-bg);
 }
 ```
+
+`@property` rule: For defining custom properties.
+
+Structure:
+```CSS
+@property --property-name {
+  syntax: '<type>';
+  inherits: true | false;
+  initial-value: <value>;
+}
+```
+
+- `--property-name`: Name of your custom property
+- `syntax`: Type of property, i.e. `<color>`, `<length>`
+- `inherits`: Whether the property should inherit its value from its parent element.
+- `initial-value`: Sets the default value of the property.
+
+Instantiated `@property`
+```CSS
+@property --main-color {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #3498db;
+}
+
+.button {
+  background-color: var(--main-color);
+}
+```
+
+The @property rule also opens up the ability for animation (i.e. by setting two styles from `initial-value` to `hover`)
+```CSS
+@property --gradient-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.gradient-box {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(var(--gradient-angle), red, blue);
+  transition: --gradient-angle 0.5s;
+}
+
+.gradient-box:hover {
+  --gradient-angle: 90deg;
+}
+```
+^ In the example above, the inital value is `0deg`, then as you hover, the gradient angle changes to `90deg`, with a transition of 0.5s.
+
+For custom properties, `@properties`, you need to have 2 sorts of fallbacks. 
+
+i. A fallback for the rule itself.
+ii. A fallback for the use of the custom property.
+
+Example of fall back for the `@property`, rule itself
+
+```CSS
+:root {
+  --main-color: #3498db;
+}
+
+@property --main-color {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #3498db;
+}
+
+body {
+  background-color: var(--main-color);
+}
+```
+See the at the `body` selector has one `--main-color`, which is referenced in `@property` and `:root`.
+
+Fallback for the value inside the custom property, using the `var()` function.
+
+```CSS
+.button {
+  background-color: var(--main-color, #3498db);
+}
+```
+^ `#3498db` is the fallback color.
+
