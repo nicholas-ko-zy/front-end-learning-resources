@@ -1559,3 +1559,221 @@ Fallback for the value inside the custom property, using the `var()` function.
 ```
 ^ `#3498db` is the fallback color.
 
+
+**CSS Grid**
+
+You can set display to `grid` and specify the number of width of colums and rows.
+
+i.e. 
+```HTML
+<link rel="stylesheet" href="styles.css">
+<div class="container">
+  <div class="item">Item 1</div>
+  <div class="item">Item 2</div>
+  <div class="item">Item 3</div>
+  <div class="item">Item 4</div>
+  <div class="item">Item 5</div>
+  <div class="item">Item 6</div>
+</div>
+```
+
+```CSS
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
+```
+
+- `grid-template-columns: 1fr 1fr 1fr;`: Create a grid with three equal width coluns
+- `grid-gap: 20px;`: Add a 20-pixel gap between each grid item
+
+Diff. between flexbox and grid: 
+
+- Flexbox is 1-dimensional but grid is 2-dimensional.
+
+- Flexbox adjusts layout around the content, grid adjusts the content according to the layout you've created. 
+
+`grid-template-columns`: Used to set the size for each column. `fr` is a fracitonal unit, a fraction of the space for the grid container.  
+
+Percentage ver.
+```
+grid-template-columns: 25% 25% 25% 25%;
+```
+`fr` equivalent ver
+```
+grid-template-columns: 1fr 1fr 1fr 1fr;
+```
+
+**Def** Track (in a CSS grid): Space between two neighboring grid lines. 
+
+`row-gap`: Used to create gaps between columns in a CSS grid.
+
+`column-gap`: Used to create gaps between columns in a CSS grid.
+
+Units for both gap properties:
+- em
+- `normal` keyword (0 for column-gap in grid layouts and `1em` for multi-column layouts)
+- percentages
+
+`gap`: Shorthand for creating gaps between rows *and* columns. Remarks: `gap` does not accept `fr` as a valid unit.
+
+Template: 
+```
+gap: row-value optional-column-value;
+```
+
+**Def** `repeat()`: Used to repeat a section or all of the tracks for columns or rows. Takes in two arguments, (i) repeat count and the (ii) tracks you wish to repeat.
+
+```CSS
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 20px 1fr);
+  column-gap: 10px;
+}
+
+.grid-container div {
+  height: 100px;
+  background-color: darkblue;
+}
+```
+
+```CSS
+grid-template-columns: repeat(2, 20px 1fr);
+```
+^ Pattern is `20px` width for the first column aand `1fr` for the second column, repeated twice. Something like a loop.
+
+**Implicit and explicit grids**
+
+**Def** Implicit grids: Rows and cols created automatically by the browser when placing items in grid layout. 
+
+Properties for implicitly created cols and rows:
+`grid-auto-columns` and `grid-auto-rows`.
+
+**Def** Explicit grids: The areas of the grid you intentionally set up. 
+
+Properties for explicitly created cols and rows:
+`grid-template-rows` and `grid-template-columns`.
+
+Example of explicit grids:
+```CSS
+.grid-container {
+  display: grid;
+  grid-template-columns: 100px 100px; /* Only 2 explicit columns */
+}
+```
+^ the two columns which are specified with widths `100px` each.
+
+Just by setting these two values, the rest of the divs will fall into place below the first 2 divs. HTML example below.
+
+```HTML
+<link rel="stylesheet" href="styles.css">
+<div class="grid-container">
+  <div class="grid-item">Item 1</div>
+  <div class="grid-item">Item 2</div>
+  <div class="grid-item">Item 3</div>
+  <div class="grid-item">Item 4</div>
+  <div class="grid-item">Item 5</div>
+  <div class="grid-item">Item 6</div>
+</div>
+```
+
+Table below copied from FreeCodeCamp.
+
+<table>
+<thead>
+<tr>
+<th><strong>Feature</strong></th>
+<th><strong>Explicit Grid</strong></th>
+<th><strong>Implicit Grid</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Size control</strong></td>
+<td>Fully customizable using  <code>grid-template-rows</code>  and  <code>grid-template-columns</code> .</td>
+<td>Controlled by  <code>grid-auto-rows</code>  and  <code>grid-auto-columns</code> , or defaults to  <code>auto</code> .</td>
+</tr>
+<tr>
+<td><strong>Default Behavior</strong></td>
+<td>Does not change unless explicitly defined.</td>
+<td>Automatically adapts to items placed outside the explicit grid.</td>
+</tr>
+<tr>
+<td><strong>Complexity</strong></td>
+<td>Requires more planning for layout structure.</td>
+<td>Easier to implement for unstructured or variable content.</td>
+</tr>
+<tr>
+<td><strong>Flexibility</strong></td>
+<td>Rigid structure with defined rows and columns.</td>
+<td>Flexible and adapts to dynamically placed content.</td>
+</tr>
+<tr>
+<td><strong>Performance</strong></td>
+<td>Potentially more performant as the layout is predefined.</td>
+<td>May require additional browser computations for implicit grid generation.</td>
+</tr>
+<tr>
+<td><strong>Use case</strong></td>
+<td>Useful when the grid structure is predictable and defined upfront.</td>
+<td>Useful for dynamic layouts where content is unknown or changes frequently.</td>
+</tr>
+</tbody>
+</table>
+
+
+**Def** `minmax()`: Defines the range for the size of a grid track, how much space a row or column can occupy. Can set with units like `px`, `rem`, `em` and `fr`. Takes two args, a min value and a max value.
+
+Example:
+```CSS
+.grid-container {
+  display: grid;
+  grid-template-columns: minmax(150px, 300px) 1fr;
+  gap: 20px;
+}
+```
+
+**Def** `grid-column`: Specify vertical placement of grid items.
+
+**Def** `grid-row`: Specify horizontal placement of grid items.
+
+
+Syntaxes:
+```
+grid-row: <start-line> / <end-line>;
+```
+
+```
+grid-column: <start-line> / <end-line>;
+```
+- `<start-line>` is the grid line where the item starts and `<end-line>` is the grid line where the item ends. Both are 1-indexed, that is, you start counting them from 1, not 0.
+- grid lines are rows generated based on the number of rows specified in `grid-template-rows` and number of columns specified in `grid-template-columns`.
+
+Example:
+```CSS
+.item1 {
+  grid-column: 1 / 3;
+}
+```
+- ^ Means that first grid items should start at column 1 and end just before column 3.
+
+You can also use `span` to indicate how many grid rows and columns your element should span across.
+
+```CSS
+.item1 {
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2;
+}
+```
+- `1 / 3`  is the same as `1 span 2`
+
+
+
+
+
+
+
+
+
+
