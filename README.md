@@ -10,11 +10,11 @@ I am currently learning off freeCodeCamp's curriculum, although it is very likel
 
 (Actively changing, nothing's set in stone)
 
-| What to learn   | Status | Resource Used| Link To My Notes|
-| -------- | ------- | ----| ---- |
-| HTML  | DONE    |freeCodeCamp|[Link](./1_notes/fcc_responsive_web_design_certification/HTML.md)|
-| CSS | DONE     |freeCodeCamp|[Link](./1_notes/fcc_responsive_web_design_certification/CSS.md)|
-| Javascript    | TODO    |-|-||
-|React.js|TODO|-|-||
+| What to learn | Status | Resource Used | Link To My Notes                                                  |
+|---------------|--------|---------------|-------------------------------------------------------------------|
+| HTML          | DONE   | freeCodeCamp  | [Link](./1_notes/fcc_responsive_web_design_certification/HTML.md) |
+| CSS           | DONE   | freeCodeCamp  | [Link](./1_notes/fcc_responsive_web_design_certification/CSS.md)  |
+| Javascript    | TODO   | freeCodeCamp  | [Link](./1_notes/fcc_javascript_certification//JavaScript.md)     |
+| React.js      | TODO   | -             | -                                                                 |
 
 
