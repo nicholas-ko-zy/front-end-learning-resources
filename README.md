@@ -968,6 +968,17 @@ Each flex container has two axes:
 ^Shorthand for `flex-direction` and `flex-wrap`.
 - `flex-flow: column wrap-reverse;`
 
+To center an element, give it the following properties:
+```CSS
+div {
+  display: flex;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+```
+
 **Typography**
 
 The art of choosing the right fonts and format to make text visually appealing and
@@ -1158,7 +1169,7 @@ You can have multiple `text-shadow` layers, it will be applied from the top to t
 }
 ```
 
-**Fixed and Sticky Positioning**: `fixed` removes the element from the normal document flow, and places it relative to the viewport. i.e . for nav bars that need to be visible at all times.`sticky` is a hybride of relative and fixed positioning; Stays within the flow of the doc, but once the user scrolls and certain point, it switches to `fixed` behaviour. 
+**Fixed and Sticky Positioning**: `fixed` removes the element from the normal document flow, and places it relative to the viewport. i.e . for nav bars that need to be visible at all times.`sticky` is a hybrid of relative and fixed positioning; Stays within the flow of the doc, but once the user scrolls and certain point, it switches to `fixed` behaviour. 
 
 Example of a fixed header element
 ```CSS
@@ -1666,6 +1677,14 @@ Example of explicit grids:
 
 Just by setting these two values, the rest of the divs will fall into place below the first 2 divs. HTML example below.
 
+`grid-auto-flow`: Defines direction that elements should fill, values:
+
+- `row`: Fills empty row first
+- `column`: Fills empty column first
+- `dense`: "dense" packing algorithm attempts to fill in holes earlier in the grid, if smaller items come up later. This may cause items to appear out-of-order, when doing so would fill in holes left by larger items.
+- `row dense`
+- `column dense`
+
 ```HTML
 <link rel="stylesheet" href="styles.css">
 <div class="grid-container">
@@ -1677,6 +1696,17 @@ Just by setting these two values, the rest of the divs will fall into place belo
   <div class="grid-item">Item 6</div>
 </div>
 ```
+
+`place-items`: The CSS `place-items` shorthand property aligns items along both the block and inline directions at once. It sets the values of the `align-items` and `justify-items` properties. 
+
+- `place-items: center stretch;`
+- `place-items: center start;`
+- `place-items: start end;`
+- `place-items: end center;`
+
+`grid-column: 1`: Stay in first column regardless of grid changes.
+
+**Def** Grid Tracks. The space between two adjacent grid lines.
 
 Table below copied from FreeCodeCamp.
 
@@ -1767,13 +1797,337 @@ You can also use `span` to indicate how many grid rows and columns your element 
 }
 ```
 - `1 / 3`  is the same as `1 span 2`
+- `1 / -1` means span all (row or column depending on what property you assign this value to)
+
+**`grid-template-areas`**: Design a visual grid layout using *named labels*.
+
+Syntax of `grid-template-areas`:
+```CSS
+grid-template-areas:
+ 'header header header'
+ 'left-sidebar main right-sidebar'
+ 'footer footer footer';
+```
+
+* `header`/`main`: Names of grid areas
+* Each space-separated value within a string corresponds to a column.
+* Each string is a row in the grid.
+
+After there is a defined template, you have to use the `grid-area` property and the named labels to put elements in that part of the grid. 
+
+Aside: Holy Grail layout
+------------------------
+
+Header, footer, two sidebars, and a main content area. 
+
+![](./img/holy_grail_layout.png)
+
+**List of relationship types for `<link>`**
+
+<table>
+<thead>
+<tr>
+<th><code>rel</code> value</th>
+<th>Description</th>
+<th><a href="/en-US/docs/Web/HTML/Reference/Elements/link"><code>&lt;link&gt;</code></a></th>
+<th><a href="/en-US/docs/Web/HTML/Reference/Elements/a"><code>&lt;a&gt;</code></a> and <a href="/en-US/docs/Web/HTML/Reference/Elements/area"><code>&lt;area&gt;</code></a></th>
+<th><a href="/en-US/docs/Web/HTML/Reference/Elements/form"><code>&lt;form&gt;</code></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#alternate"><code>alternate</code></a></td>
+<td>Alternate representations of the current document.</td>
+<td>Link</td>
+<td>Link</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="#author"><code>author</code></a></td>
+<td>Author of the current document or article.</td>
+<td>Link</td>
+<td>Link</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="#bookmark"><code>bookmark</code></a></td>
+<td>Permalink for the nearest ancestor section.</td>
+<td>Not allowed</td>
+<td>Link</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="#canonical"><code>canonical</code></a></td>
+<td>Preferred URL for the current document.</td>
+<td>Link</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="/en-US/docs/Web/HTML/Reference/Attributes/rel/compression-dictionary"><code>compression-dictionary</code></a></td>
+<td>Link to a <a href="/en-US/docs/Glossary/Compression_dictionary_transport">compression dictionary</a> that can be used to compress future downloads for resources on this site.</td>
+<td>Link</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="/en-US/docs/Web/HTML/Reference/Attributes/rel/dns-prefetch"><code>dns-prefetch</code></a></td>
+<td>Tells the browser to preemptively perform DNS resolution for the target resource's origin.</td>
+<td>External Resource</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="#external"><code>external</code></a></td>
+<td>The referenced document is not part of the same site as the current document.</td>
+<td>Not allowed</td>
+<td>Annotation</td>
+<td>Annotation</td>
+</tr>
+<tr>
+<td><a href="#expect"><code>expect</code></a></td>
+<td>When used with <a href="/en-US/docs/Web/HTML/Reference/Elements/link#blocking"><code>blocking="render"</code></a>, allows the page to be <a href="/en-US/docs/Glossary/Render_blocking">render-blocked</a> until the essential parts of the document are parsed so it will render consistently.</td>
+<td>Link</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="#help"><code>help</code></a></td>
+<td>Link to context-sensitive help.</td>
+<td>Link</td>
+<td>Link</td>
+<td>Link</td>
+</tr>
+<tr>
+<td><a href="#icon"><code>icon</code></a></td>
+<td>An icon representing the current document.</td>
+<td>External Resource</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="#license"><code>license</code></a></td>
+<td>Indicates that the main content of the current document is covered by the copyright license described by the referenced document.</td>
+<td>Link</td>
+<td>Link</td>
+<td>Link</td>
+</tr>
+<tr>
+<td><a href="/en-US/docs/Web/HTML/Reference/Attributes/rel/manifest"><code>manifest</code></a></td>
+<td>Web app manifest.</td>
+<td>Link</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="/en-US/docs/Web/HTML/Reference/Attributes/rel/me"><code>me</code></a></td>
+<td>Indicates that the current document represents the person who owns the linked content.</td>
+<td>Link</td>
+<td>Link</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="/en-US/docs/Web/HTML/Reference/Attributes/rel/modulepreload"><code>modulepreload</code></a></td>
+<td>Tells to browser to preemptively fetch the script and store it in the document's module map for later evaluation. Optionally, the module's dependencies can be fetched as well.</td>
+<td>External Resource</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="#next"><code>next</code></a></td>
+<td>Indicates that the current document is a part of a series and that the next document in the series is the referenced document.</td>
+<td>Link</td>
+<td>Link</td>
+<td>Link</td>
+</tr>
+<tr>
+<td><a href="#nofollow"><code>nofollow</code></a></td>
+<td>Indicates that the current document's original author or publisher does not endorse the referenced document.</td>
+<td>Not allowed</td>
+<td>Annotation</td>
+<td>Annotation</td>
+</tr>
+<tr>
+<td><a href="/en-US/docs/Web/HTML/Reference/Attributes/rel/noopener"><code>noopener</code></a></td>
+<td>Creates a top-level browsing context that is not an auxiliary browsing context if the hyperlink would create either of those, to begin with (i.e., has an appropriate <code>target</code> attribute value).</td>
+<td>Not allowed</td>
+<td>Annotation</td>
+<td>Annotation</td>
+</tr>
+<tr>
+<td><a href="/en-US/docs/Web/HTML/Reference/Attributes/rel/noreferrer"><code>noreferrer</code></a></td>
+<td>No <code>Referer</code> header will be included. Additionally, has the same effect as <code>noopener</code>.</td>
+<td>Not allowed</td>
+<td>Annotation</td>
+<td>Annotation</td>
+</tr>
+<tr>
+<td><a href="#opener"><code>opener</code></a></td>
+<td>Creates an auxiliary browsing context if the hyperlink would otherwise create a top-level browsing context that is not an auxiliary browsing context (i.e., has <code>"_blank"</code> as <code>target</code> attribute value).</td>
+<td>Not allowed</td>
+<td>Annotation</td>
+<td>Annotation</td>
+</tr>
+<tr>
+<td><a href="#pingback"><code>pingback</code></a></td>
+<td>Gives the address of the pingback server that handles pingbacks to the current document.</td>
+<td>External Resource</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="/en-US/docs/Web/HTML/Reference/Attributes/rel/preconnect"><code>preconnect</code></a></td>
+<td>Specifies that the user agent should preemptively connect to the target resource's origin.</td>
+<td>External Resource</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="/en-US/docs/Web/HTML/Reference/Attributes/rel/prefetch"><code>prefetch</code></a></td>
+<td>Specifies that the user agent should preemptively fetch and cache the target resource as it is likely to be required for a followup navigation.</td>
+<td>External Resource</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="/en-US/docs/Web/HTML/Reference/Attributes/rel/preload"><code>preload</code></a></td>
+<td>Specifies that the user agent must preemptively fetch and cache the target resource for current navigation according to the potential destination given by the <a href="/en-US/docs/Web/HTML/Reference/Elements/link#as"><code>as</code></a> attribute (and the priority associated with the corresponding destination).</td>
+<td>External Resource</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="/en-US/docs/Web/HTML/Reference/Attributes/rel/prerender"><code>prerender</code></a> <span role="img" class="icon icon-deprecated" title="Deprecated. Not for use in new websites." aria-label="Deprecated"></span></td>
+<td>Specifies that the user agent should preemptively fetch the target resource and process it in a way that helps deliver a faster response in the future. This feature is superseded by the <a href="/en-US/docs/Web/API/Speculation_Rules_API">Speculation Rules API</a>.</td>
+<td>External Resource</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="#prev"><code>prev</code></a></td>
+<td>Indicates that the current document is a part of a series and that the previous document in the series is the referenced document.</td>
+<td>Link</td>
+<td>Link</td>
+<td>Link</td>
+</tr>
+<tr>
+<td><a href="#privacy-policy"><code>privacy-policy</code></a></td>
+<td>Gives a link to information about the data collection and usage practices that apply to the current document.</td>
+<td>Link</td>
+<td>Link</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="#search"><code>search</code></a></td>
+<td>Gives a link to a resource that can be used to search through the current document and its related pages.</td>
+<td>Link</td>
+<td>Link</td>
+<td>Link</td>
+</tr>
+<tr>
+<td><a href="#stylesheet"><code>stylesheet</code></a></td>
+<td>Imports a style sheet.</td>
+<td>External Resource</td>
+<td>Not allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="#tag"><code>tag</code></a></td>
+<td>Gives a tag (identified by the given address) that applies to the current document.</td>
+<td>Not allowed</td>
+<td>Link</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td><a href="#terms-of-service"><code>terms-of-service</code></a></td>
+<td>Link to the agreement, or terms of service, between the document's provider and users who wish to use the document.</td>
+<td>Link</td>
+<td>Link</td>
+<td>Not allowed</td>
+</tr>
+</tbody>
+</table>
+
+**Debugging CSS with DevTools Inspection Tools and CSS Validators**
+
+DevTools: Your browsers come with DevTools, you can use `F12` to inspect or right click -> inspect.
+
+You can inspect and modify your CSS in real time. 
+
+CSS Validators: i.e. W3C CSS Validator, you can upload your CSS file or provide a URL to validate/ 
 
 
+**CSS Animations**
+
+Creating dynamic effects without JavaScript. Two main components:
+1. @keyframes
+2. The animation property
+
+Example:
+```CSS
+@keyframes slide-in {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+```
+`slide-in`: The name of your animation, this one just happens to be named `slide-in`.
+
+`0%`, `100%`: Represents progress of animation
+
+`translateX`: Controls horizontal position of an element as it animates into view.
+
+To apply the animation, use the `animation` property, which is shorthand for many animation properties
+
+i.e. 
+```CSS
+@keyframes slide-in {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.sliding-element {
+  animation: slide-in 2s ease-out infinite;
+}
+```
+
+`infinite`: Loops indefinetely
+
+`ease-out`: Specifies that the animation should start quickly, slowing down as it continues. (generically, this is called the timing function)
 
 
+List of some detailed animation properties
 
+```CSS
+.complex-animation {
+  animation-name: color-change;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-delay: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+```
 
+Animations can be triggered by events, i.e. hovering.
 
+Example of animating a button's color change from blue to red
+```CSS
+.button {
+  background-color: blue;
+  transition: background-color 0.3s;
+}
 
+.button:hover {
+  background-color: red;
+}
+```
 
 
