@@ -10,7 +10,7 @@ I am currently learning off freeCodeCamp's curriculum, although it is very likel
 
 (Actively changing, nothing's set in stone)
 
-| What to learn   | Status | Resource Used| Link To My NoTes|
+| What to learn   | Status | Resource Used| Link To My Notes|
 | -------- | ------- | ----| ---- |
 | HTML  | DONE    |freeCodeCamp|[Link](./1_notes/fcc_responsive_web_design_certification/HTML.md)|
 | CSS | DONE     |freeCodeCamp|[Link](./1_notes/fcc_responsive_web_design_certification/CSS.md)|
