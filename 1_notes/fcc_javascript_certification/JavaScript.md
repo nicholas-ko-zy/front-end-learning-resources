@@ -2,7 +2,7 @@
 
 From FreeCodeCamp's JavaScript Certification Course
 
-**Date Types**
+**Data Types**
 
 - `Number`: Reps. both integers and floating-point values.
 - `String`: Can use both double `"` and single `'` quotes.
