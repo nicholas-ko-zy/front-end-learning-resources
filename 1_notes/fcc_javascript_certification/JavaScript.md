@@ -337,7 +337,7 @@ Associativity: Direction of evaluation, left-to-right or right-to-left.
 - Right-to-left: `=` i.e. `a = b = 5;`, b = 5 then a. Exponent operator also, i.e. `2 ** 3 ** 2;` which is `2 ** 9;`
 
 **Increment and Decrement Operators**
-- `++`: `y++` (postfix) means increment, then use. `++y` (prefix) means increment and return inthe same line. 
+- `++`: `y++` (postfix) means increment, then use. `++y` (prefix) means increment and return in the same line. 
 - `--`
 
 **Compound Assignment**
@@ -367,6 +367,8 @@ if (isOldEnoughToDrive) {
  console.log("Sorry, you are not old enough to drive");
 }
 ```
+
+Remark: variables within `if/else` blocks are block-scoped, you cannot reference variables declared inside the block outside.
 
 - `==`: Equality operator (relaxed, with type coercion)
 ```JavaScript
@@ -462,6 +464,339 @@ console.log(`It's a ${weather} day!`);
   const result = null ?? 'default';
   console.log(result); // default
   ```
+
+**Math Objects**
+
+- `Math.random()`: To produce a random float between 0 and 1.
+  ```JavaScript
+  // To randomly generate a float between a range
+  // If you want a ra random int, just wrapt Math.floor around it.
+  Math.random() * (max - min) + min
+  ```
+- `Math.min()`: Min function
+- `Math.max()`: Max function
+- `Math.ceil()`: Ceiling function
+- `Math.floor()`: Floor function
+- `Math.round()`: Self-explanatory
+- `Math.trunc()`: Removes decimal part of the number
+- `Math.sqrt()`: Square root function
+- `Math.cbrt()` Cube root function
+- `Math.abs()`: Absolute
+- `Math.pow()`: Raises the first number to the power of the second, i.e. `Math.pow(2, 3)` is $2^3 = 8$.
+
+Remark: You can combine `.random()` and `.round()` to randomly generate an integer.
+
+To note: In Javascript, `NaN` is not equal to anything, including itself.
+
+```JavaScript
+console.log(NaN === NaN); // false
+```
+
+- `isNaN()`: Function to check if a value is `NaN`
+  ```JavaScript
+  // Example usage
+  console.log(isNaN(NaN)) // true
+
+  console.log(isNaN("blabla")) // true, string is not a number
+
+  // isNaN will try to coerce the input into a number
+  console.log(isNaN("37.37")) // false
+  ```
+- `Number.isNaN()`: Same as `isNaN()` but without the coercion to number type.
+
+**Converting strings to numbers**
+- `parseFloat()`: Parse a string for float values, returns float values.
+  ```JavaScript
+  console.log(parseFloat("3.14 abc"))
+  ```
+- `parseInt()`: Same as above, but returns an int.
+
+- `toFixed()`: Rounds a number to a specific **string** with the number of  decimal points you want. 
+  ```JavaScript
+  let num = 3.14159;
+  console.log(num.toFixed(2)); // "3.14"
+  ```
+
+**Comparisons with Null and Undefined types**
+
+- `undefined`: When var is declared but not yet assigned a value.
+- `null`: Deliberate assignment of a non-value.
+- `null` == `undefined` will do a type coercion and eval true.
+- `null` == `undefined` will not, and eval false
+
+Gotchas:
+```JavaScript
+console.log(null >= 0); // true
+```
+
+**Switch statements**: Usually used for checking a single value against multiple cases.
+
+Example:
+```JavaScript
+let dayOfWeek = 3; 
+
+switch (dayOfWeek) {
+    case 1:
+        console.log("It's Monday! Time to start the week strong.");
+        break;
+    case 2:
+        console.log("It's Tuesday! Keep the momentum going.");
+        break;
+    case 3:
+        console.log("It's Wednesday! We're halfway there.");
+        break;
+    case 4:
+        console.log("It's Thursday! Almost the weekend.");
+        break;
+    case 5:
+        console.log("It's Friday! The weekend is near.");
+        break;
+    case 6:
+        console.log("It's Saturday! Enjoy your weekend.");
+        break;
+    case 7:
+        console.log("It's Sunday! Rest and recharge.");
+        break;
+    default:
+        console.log("Invalid day! Please enter a number between 1 and 7.");
+}
+```
+- `switch` statements use the strict comparison `===`.
+- `default` only activates if you never match any of the above cases.
+- You need a `break` in your switch statement otherwise, your program will compare with the other cases.
+- `if/else` can handle more complex conditions.
+
+## Functions
+Syntax: 
+```JavaScript
+// Example 1
+function greet(name) {
+  console.log("Hello, " + name + "!");
+}
+
+greet("Alice"); // Hello, Alice!
+greet("Nick"); // Hello, Nick!
+
+// Example 2: With returns
+function calculateSum(num1, num2) {
+  return num1 + num2;
+}
+
+console.log(calculateSum(3, 4)); // 7
+
+// Example 3: With default values
+function greetings(name = "Guest") {
+  console.log("Hello, " + name + "!");
+}
+
+greetings(); // Hello, Guest!
+greetings("Anna"); // Hello, Anna!
+```
+
+- By default, the return values will be `undefined`.
+
+**Arrow Functions**: A different way of writing functions, check with your team's codebase for the convention.
+
+Examples
+```JavaScript
+// Example 1: Printing to console
+const greetings = (name) => {
+  console.log("Hello, " + name + "!");
+};
+
+// Example 2: No parameter, print
+const greetings = () => {
+  console.log("Hello");
+};
+
+// Example 3: With return statement
+const calculateArea = (width, height) => {
+  const area = width * height;
+  return area;
+};
+
+console.log(calculateArea(5, 3)); // 15
+```
+
+- For implicit return, no need `return`, just `(a, b) => a + b`
+
+**Scope**
+- Global Scope: Outermost scope, can be accessed anywhere in the file
+- Local Scope: Scope of variablesthat are accessible only within the function
+- Block Scope: Accessible only within the block
+
+let duplexLoanMsg =	getLoanMessage(85000, 850);
+let condoLoanMsg =	getLoanMessage(65000, 690);
+let carLoanMsg =	getLoanMessage(45000, 660);
+let noLoanMsg =	getLoanMessage(25000, 550);
+
+console.log(duplexLoanMsg);
+console.log(condoLoanMsg);
+console.log(carLoanMsg);
+console.log(noLoanMsg);
+
+## Arrays
+- `let fruits = ["apple", "banana", "orange"];`
+- Updating: You can update an element by assigning a new value to a specific index (can also be a new index)
+  ```JavaScript
+  let fruits = ["apple", "banana", "cherry"];
+  fruits[1] = "blueberry";
+  console.log(fruits); // ["apple", "blueberry", "cherry"]
+  ```
+- `push()`: Add one element to end of an array, returns the new length of the array
+- `pop()`: Removes the last element in the array and returns that removed element
+- `shift()`: Removes the first element from an array and returns that element. // `pop()` but for the beginning of the array.
+- `unshift()`: Adds one or more elements to the beginning of the array and returns its new length.
+  ```JavaScript
+  let numbers = [2, 3];
+  let newLength = numbers.unshift(1);
+  console.log(numbers); // [1, 2, 3]
+  console.log(newLength); // 3
+  ```
+- 2D arrays
+  ```JavaScript
+  let chessboard = [
+    ["R", "N", "B", "Q", "K", "B", "N", "R"],
+    ["P", "P", "P", "P", "P", "P", "P", "P"],
+    [" ", " ", " ", " ", " ", " ", " ", " "],
+    [" ", " ", " ", " ", " ", " ", " ", " "],
+    [" ", " ", " ", " ", " ", " ", " ", " "],
+    [" ", " ", " ", " ", " ", " ", " ", " "],
+    ["p", "p", "p", "p", "p", "p", "p", "p"],
+    ["r", "n", "b", "q", "k", "b", "n", "r"]
+  ];
+
+  console.log(chessboard[0][3]); // "Q"
+  ```
+- Array destructuring: Assinging var names to elements in a list concisely
+  ```JavaScript
+  // Example 1: Assigning to all elements
+  let fruits = ["apple", "banana", "orange"];
+
+  let [first, second, third] = fruits;
+
+  console.log(first);  // "apple"
+  console.log(second); // "banana"
+  console.log(third);  // "orange"
+
+  // Example 2: Skipping assignments
+  let colors = ["red", "green", "blue", "yellow"];
+  let [firstColor, , thirdColor] = colors;
+
+  console.log(firstColor); // "red"
+  console.log(thirdColor); // "blue"
+
+  // Example 3: Adding default values if your reference array has fewer elements than your intended array
+  let numbers = [1, 2];
+  let [a, b, c = 3] = numbers;
+
+  console.log(a); // 1
+  console.log(b); // 2
+  console.log(c); // 3
+
+  // Example 4: Captures remaining element of array that have not been desructured.
+  let fruits = ["apple", "banana", "orange", "mango", "kiwi"];
+  let [first, second, ...rest] = fruits;
+
+  console.log(first);  // "apple"
+  console.log(second); // "banana"
+  console.log(rest);   // ["orange", "mango", "kiwi"]
+  ```
+
+**String and array reversals.**
+- `split()`: Divides input string into array of substrings based on the seperator input.
+  ```JavaScript
+  let str = "hello";
+  let charArray = str.split("");
+  console.log(charArray); // ["h", "e", "l", "l", "o"]
+  ```
+- `reverse()`: reverses an array in place
+- `join()`: Works like `string.join()` in Python
+  
+`indexOf()`: Getting the index of an element you are searching from in an array.
+
+Example:
+```JavaScript
+let fruits = ["apple", "banana", "orange", "banana"];
+let index = fruits.indexOf("banana");
+console.log(index); // 1
+```
+- If element not found, it'll return `-1`.
+- You can add a second element, to specify which index onwards to start your search from.
+
+`splice()`: Add and remove elements from middle of an array.
+
+```JavaScript
+array.splice(startIndex, itemsToRemove, item1, item2)
+```
+
+```JavaScript
+let fruits = ["apple", "banana", "orange", "mango", "kiwi"];
+let removed = fruits.splice(2, 2);
+
+console.log(fruits);  // ["apple", "banana", "kiwi"]
+console.log(removed); // ["orange", "mango"]
+```
+- ^ In the example above, we tell the computer that we want to start removing from index 2 (`"orange"`) and we want to remove 2 elements (`"orange"`, `"mango"`).
+
+```JavaScript
+// Example 2: Adding items, no removal
+let colors = ["red", "green", "blue"];
+colors.splice(1, 0, "yellow", "purple");
+
+console.log(colors); // ["red", "yellow", "purple", "green", "blue"]
+
+// Example 3: Adding and removing items at the same time
+let numbers = [1, 2, 3, 4, 5];
+numbers.splice(1, 2, 6, 7, 8);
+
+console.log(numbers); // [1, 6, 7, 8, 4, 5]
+
+// Example 4: Creating a copy before applying splice
+let original = [1, 2, 3, 4, 5];
+let copy = [...original];
+copy.splice(2, 1, 6);
+
+console.log(original); // [1, 2, 3, 4, 5]
+console.log(copy);     // [1, 2, 6, 4, 5]
+
+// Example 5: Removing an element from a list using indexOf() and splice()
+let fruits = ["apple", "banana", "orange", "mango"];
+let indexToRemove = fruits.indexOf("orange");
+if (indexToRemove !== -1) {
+    fruits.splice(indexToRemove, 1);
+}
+
+console.log(fruits); // ["apple", "banana", "mango"]
+```
+
+- Remark: In example 4, `...` is called the 'spread operator', it creates a shallow copy of the elements in the original array.
+- Remark: splice is inefficient for large arrays, because it spends time trying to shift the position of the elements when something is removed.
+
+`includes()`: Check if an array contains a certain value. Can include an optional second parameter to indicate the start search index. uses strict equality comparison, so cannot search for `2` and match with `"2"`.
+
+**Shallow Copies**: Can modify without affecting the original.
+
+- `concat()`: `[]concat(originalArray)`
+- `slice()`: `originalArray.slice()`
+- `...` (Spread operator): `[...originalArray]`
+
+Shallow copies fail strict equality checks, different object references.
+
+## Objects
+
+```JavaScript
+// Syntax
+const exampleObject = {
+  propertyName: value,
+}
+
+// Example 1:
+const person = {
+  name: "Alice",
+  age: 30,
+  city: "New York"
+};
+```
+- `objectName.propertyName` (Dot notation): Access object properties
 - 
-
-
