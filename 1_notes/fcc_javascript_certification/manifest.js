@@ -6,34 +6,10 @@ const cargoManifest = {
   hazmat: null
 }
 
-function normalizeUnits(manifest) {
-  // Create a copy of the manifest object
-  if (manifest.unit == "kg") {
-    let converted_manifest = manifest;
-    return converted_manifest;
-  } else {
-    let weight_kg = manifest.weight * 0.45;
-    const converted_manifest = {
-      containerId: manifest.containerId,
-      destination: manifest.destination, 
-      weight: weight_kg,
-      unit: "kg",
-      hazmat: manifest.hazmat
-    }
-    return converted_manifest;
-  }
-  return converted_manifest;
-};
-
-let new_manifest = normalizeUnits({ containerId: 68, destination: "Salinas", weight: 101, unit: "lb", hazmat: true });
-
-console.log(new_manifest);
-console.log(typeof(new_manifest.weight));
-
-function valid_id(manifest) {
-  id = manifest.containerId
-  if (typeof(id) != "number" || id < 0) {
-    if (id.isInteger()) {
+function check_valid_id(manifest) {
+  let id = manifest.containerId;
+  if (typeof(id) == "number" && id > 0) {
+    if (Number.isInteger(id)) {
       return true
     }
     else {
@@ -44,18 +20,91 @@ function valid_id(manifest) {
   }
 }
 
+function check_valid_destination(manifest) {
+    let destination = manifest.destination;
+    if (destination != "" && typeof(destination) == "string") {
+        return true
+    }
+    else {
+        return false
+    }
+};
+
+function check_valid_weight(manifest) {
+    let weight = manifest.weight;
+    if (typeof(weight) == "number" && weight > 0) {
+        return true
+    } else {
+        return false
+    }
+    
+};
+
+function check_valid_unit(manifest) {
+  // Check is string
+  let unit = manifest.unit;
+  if (typeof(unit) == "string" && ["lb", "kg"].includes(unit)) {
+    return true
+  } else {
+    return false
+  }
+};
+
+function check_valid_hazmat(manifest) {
+  let hazmat = manifest.hazmat;
+  if (typeof(hazmat) == "boolean") {
+    return true
+  }
+  else {
+    return false
+  }
+};
+
+function check_missing_attribute(manifest, attribute) {
+    return !manifest.hasOwnProperty(attribute)
+}
+
+let manifest =  {containerId: 1, 
+                destination: "Santa Cruz", 
+                weight: 304, 
+                unit: "kg", 
+                hazmat: false };
+
+console.log(`Valid ID: ${check_valid_id(manifest)}`);
+console.log(`Valid Destination: ${check_valid_destination(manifest)}`);
+console.log(`Valid Weight: ${check_valid_weight(manifest)}`);
+console.log(`Valid Unit: ${check_valid_unit(manifest)}`);
+console.log(`Valid Hazmat: ${check_valid_hazmat(manifest)}`);
+console.log(`Missing Attribute: ${check_missing_attribute(manifest, "hazmat")}`);
+
 function validateManifest(manifest) {
   // Check if all properties are there
-  let valid_id = manifest.hasOwnProperty("containerId");
-  let has_destination = manifest.hasOwnProperty("destination");
-  let has_weight = manifest.hasOwnProperty("weight");
-  let has_unit = manifest.hasOwnProperty("unit");
-  let has_hazmat = manifest.hasOwnProperty("hazmat");
+  let has_valid_id = check_valid_id(manifest);
+  let has_valid_destination = check_valid_destination(manifest);
+  let has_valid_weight = check_valid_weight(manifest);
+  let has_valid_unit = check_valid_unit(manifest);
+  let has_valid_hazmat = check_valid_hazmat(manifest);
 
-  if (has_id && has_destination && has_weight && has_unit && has_hazmat) {
+  if (has_valid_id && has_valid_destination && has_valid_weight && has_valid_unit && has_valid_hazmat) {
     return {}
   }
   else {
-
+    // Initialise empty object
+    const error_message = {};
+    // Write 10 if/ if else statements...sigh
+    // Invalid id
+    if (!has_valid_id) {
+        error_message["containerId"] = "Invalid";
+    }
+    // Missing id
+    // Invalid destination 
+    // Missing destination
+    // Invalid weight
+    // Missing weight
+    // Invalid unit
+    // Missing unit
+    // Invalid hazmat
+    // Missing hazmat
+    
   }
 };
