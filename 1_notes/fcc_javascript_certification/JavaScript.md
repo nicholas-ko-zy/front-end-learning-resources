@@ -798,5 +798,111 @@ const person = {
   city: "New York"
 };
 ```
-- `objectName.propertyName` (Dot notation): Access object properties
-- 
+Ways to access object properties
+- `objectName.propertyName` (Dot notation)
+- `objectName[propertyName]` (Bracket notation, more flexible, can use space) <- can also use variables as property names, see example below
+  ```JavaScript
+  const person = {
+  name: "Alice",
+  age: 30,
+  city: "Wonderland"
+  };
+
+  let propertyName = "city";
+  console.log(person[propertyName]); // Wonderland
+  ```
+
+Removing properties from objects
+- `delete` i.e. `delete person.job`
+- Destructuring (doesn't actually delete the object reference but doesn't reassign the left out properties)
+  ```JavaScript
+  // Removing object properties with destructuring
+  const person = {
+    name: "Bob",
+    age: 25,
+    job: "Designer",
+    city: "New York"
+  };
+
+  const { job, city, ...remainingProperties } = person;
+
+  // { name: "Bob", age: 25 }
+  console.log(remainingProperties);
+  ```
+
+Checking if an object has a property
+- `hasOwnProperty()`: Returns bool value
+  ```JavaScript
+  console.log(person.hasOwnProperty("name")); // true
+  ```
+- `Object.hasOwn()` (check for native properties, no inherited ones)
+  ```JavaScript
+  console.log(Object.hasOwn(person, "name")); // true
+  ```
+- `in`
+  ```JavaScript
+  console.log("YOUR_PROP_NAME" in YOUR_OBJECT);  // true
+  ```
+- Checking against `undefined`
+  ```JavaScript
+  console.log(YOUR_OBJECT.PROPERTY_TO_CHECK !== undefined); // true
+  ```
+  ^ But be careful if the prop exists for the object, just that its value is unassigned.
+
+Primitive and non-primitive data types
+- Primitive (immutable, values cannot be changed once created)
+  - number
+  - bigint
+  - string
+  - boolean
+  - `null`
+  - `undefined`
+  - symbol
+- Non-primitive (if you reassign var names, and update the copy, the original is updated also, similar to python)
+  - array
+  - functions
+  - objects you make up
+  ```JavaScript
+  // Example of non-primitive types overwriting, same obj reference
+  const originalPerson = { name: "John", age: 30 };
+  const copiedPerson = originalPerson;
+
+  originalPerson.age = 31;
+
+  console.log(copiedPerson.age); // 31
+  ```
+
+**Object Methods**
+Example:
+```JavaScript
+const person = {
+    name: "Bob",
+    age: 30,
+    sayHello: function() {
+        return "Hello, my name is " + this.name;
+    }
+};
+
+console.log(person.sayHello()); // "Hello, my name is Bob"
+```
+- `this` keyword is like `self` in Python.
+
+**Object Constructor**
+```JavaScript
+new Object()
+```
+
+Your normalizeUnits function should return a copy of the input manifest object with its weight normalized to kilograms and its unit set to "kg". Use the approximate conversion 1 lb = 0.45 kg for the weight conversion.
+
+{ containerId: 68,
+  destination: 'Salinas',
+  weight: 45.45,
+  unit: 'kg',
+  hazmat: true }
+number
+
+manifest.hasOwnProperty("containerId")
+manifest.hasOwnProperty("destination")
+manifest.hasOwnProperty("weight")
+manifest.hasOwnProperty("unit")
+manifest.hasOwnProperty("hazmat")
