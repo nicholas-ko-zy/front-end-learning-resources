@@ -892,17 +892,140 @@ console.log(person.sayHello()); // "Hello, my name is Bob"
 new Object()
 ```
 
-Your normalizeUnits function should return a copy of the input manifest object with its weight normalized to kilograms and its unit set to "kg". Use the approximate conversion 1 lb = 0.45 kg for the weight conversion.
+**JSON**
 
-{ containerId: 68,
-  destination: 'Salinas',
-  weight: 45.45,
-  unit: 'kg',
-  hazmat: true }
-number
+JSON stands for JavaScript Objection Notation, a text-based data format commonly used to exchange data between a server and a web application. It's language independent.
 
-manifest.hasOwnProperty("containerId")
-manifest.hasOwnProperty("destination")
-manifest.hasOwnProperty("weight")
-manifest.hasOwnProperty("unit")
-manifest.hasOwnProperty("hazmat")
+Example: *Remark: Cannot insert comments inside JSON.
+```JSON
+{
+  "name": "Alice",
+  "age": 30,
+  "isStudent": false,
+  "list of courses": ["Mathematics", "Physics", "Computer Science"]
+}
+```
+- You can use either dot or bracket notation to access the values inside.
+
+Example of import a JSON into a .js file.
+```JavaScript
+import data from "./example.json" with { type: "json" };
+
+console.log(data.age);
+```
+
+- `JSON.parse()`: Converts a JSON string back into a JavaScript object.
+  Example
+  ```JavaScript
+  const jsonString = '{"name":"John","age":30,"isAdmin":true}';
+  const userObject = JSON.parse(jsonString);
+  console.log(userObject);
+
+  // Result:
+  // { name: 'John', age: 30, isAdmin: true }
+  ```
+
+- `JSON.stringify()`: Used to convert a JS object into a JSON string. Usefuly for storing, transmiting data between systems.
+  - Accepts an additional param called a "replacer", can be used to 'slice' the object.
+    Example
+    ```JavaScript
+    const developerObj = {
+    firstName: "Jessica",
+    isAwesome: true,
+    isMusician: true,
+    country: "USA",
+    };
+
+    // result: {"firstName":"Jessica","country":"USA"}
+    console.log(JSON.stringify(developerObj, ["firstName", "country"]));
+    ```
+    - Another optional param is the 'spacer'. Allows you to control the spacing for the stringified result.
+    Example
+    ```JavaScript
+    const developerObj = {
+      firstName: "Jessica",
+      isAwesome: true,
+      isMusician: true,
+      country: "USA",
+    };
+    // null for the replacer option
+    console.log(JSON.stringify(developerObj, null, 2));
+
+    /* result
+    {
+      "firstName": "Jessica",
+      "isAwesome": true,
+      "isMusician": true,
+      "country": "USA"
+    }
+    */
+    ```
+
+
+**Object Chaining and Objecting Destructuring**
+
+- `?.` (Chaining): Helps you safely access object properties without worrying whether they exist. Just put a question mark, `?`, in front of the period, `.`, if unsure. Benefit: It will return undefined if you chain instead of producing an error if you try to access beyond a non-existent property.
+  
+  Example
+  ```JavaScript
+  const user = {
+    name: "John",
+    profile: {
+      email: "john@example.com",
+      address: {
+        street: "123 Main St",
+        city: "Somewhere"
+      }
+    }
+  };
+
+  console.log(user?.profile?.address?.street); // "123 Main St"
+  console.log(user?.profile?.phone?.number);   // undefined
+  ```
+- Object Destructuring: A way to assign multiple variables to complex objects. Essentially - unpacking JS objects.
+  
+  ```JavaScript
+  // Example 1: Object destructuring
+  let person = { name: "Alice", age: 30, city: "New York" };
+
+  let { name: personName, age: personAge } = person;
+
+  console.log(personName); // Alice
+  console.log(personAge); //  30
+
+  // Example 2: Object destructuring with default (fallback) values
+  let person = { name: "Alice", age: 30, city: "New York" };
+  let { name, age, country = "Unknown" } = person;
+
+  console.log(country); // Unknown
+
+  // Example 3: Nested object destructuring with braces wrapped about the object of interest.
+  const recipe = {
+    name: "Chocolate Cake",
+    ingredients: {
+      flour: "2 cups",
+      sugar: "1 cup"
+    }
+  };
+
+  // Extract `flour` from `ingredients`
+  const { ingredients: { flour } } = recipe;
+
+  console.log(flour); // "2 cups"
+
+  // Example 4: Object creation with shorthand
+  let name = "Bob";
+  let age = 25;
+
+  let person = { name, age };
+
+  console.log(person); // { name: "Bob", age: 25 }
+
+  // Example 5: Returning object created with shorthand
+  function createPerson(name, age) {
+    return { name, age };
+  }
+
+  let person = createPerson("Charlie", 35);
+  console.log(person); // { name: "Charlie", age: 35 }
+  ```
