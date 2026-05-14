@@ -165,6 +165,27 @@ function validateManifest(manifest) {
   }
 };
 
+function processManifest(manifest) {
+  // 1. Check if manifest is valid, if true, pass it through the 
+  // normalizeUnits function and log a message
+  let result = validateManifest(manifest);
+  if (JSON.stringify(result) == JSON.stringify({})) {
+    let normalizedManifest = normalizeUnits(manifest);
+    let validationSuccessMessage = `Validation success: ${normalizedManifest.containerId}`;
+    let totalWeightMessage = `Total weight: ${normalizedManifest.weight} kg`;
+    console.log(validationSuccessMessage);
+    console.log(totalWeightMessage);
+    return [validationSuccessMessage, totalWeightMessage]
+  } else {
+    // 2. Otherwise return validation error, logging the containerId and
+    // return the validateManifest(manifest) output
+    let validationErrorMessage = `Validation error: ${manifest.containerId}`;
+    console.log(validationErrorMessage);
+    console.log(result);
+    return [validationErrorMessage, result]
+  }
+};
+
 ////////////////// PERSONAL TEST CASES /////////////////////////////
 
 // console.log(`Valid ID: ${check_valid_id(manifest)}`);
@@ -174,7 +195,7 @@ function validateManifest(manifest) {
 // console.log(`Valid Hazmat: ${check_valid_hazmat(manifest)}`);
 // console.log(`Missing Attribute: ${check_missing_attribute(manifest, "hazmat")}`);
 
-////////////////// FCC TEST CASES /////////////////////////////
+/////////////////// FCC TEST CASES /////////////////////////////////
 const expected = [];
 const input = [];
 const result = [];
@@ -203,4 +224,15 @@ input.push({destination: "  "})
 result.push(validateManifest(input[3]))
 comparison.push(JSON.stringify(result[3]) == JSON.stringify(expected[3]))
 console.log(`Test 13 Results: ${comparison[3]}`)
-console.log(result[3])
+
+expected.push(["Validation success: 55", "Total weight: 180 kg"])
+input.push({ containerId: 55, destination: "Carmel", weight: 400, unit: "lb", hazmat: false })
+result.push(processManifest(input[4]))
+comparison.push(JSON.stringify(result[4]) == JSON.stringify(expected[4]))
+console.log(`Test 18 Results: ${comparison[4]}`)
+
+expected.push(["Validation error: -88", { containerId: "Invalid", weight: "Invalid", unit: "Missing", hazmat: "Missing" }])
+input.push({ containerId: -88, destination: "Soledad", weight: NaN })
+result.push(processManifest(input[5]))
+comparison.push(JSON.stringify(result[5]) == JSON.stringify(expected[5]))
+console.log(`Test 22 Results: ${comparison[5]}`)
