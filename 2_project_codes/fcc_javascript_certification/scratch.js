@@ -1,5 +1,2 @@
-const dummy_obj = {};
-
-dummy_obj['new_attr'] = 1;
-
-console.log(dummy_obj);
+let test_string = "   blah";
+console.log(test_string.trim())
