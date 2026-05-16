@@ -196,6 +196,7 @@ Covers:
 * Numbers (0-9).
 * Common punctuation marks and symbols (!, @, #, and so on).
 * Control characters (such as newline and tab).
+* lowercase letters: ascii 97 to 122
 
 `charCodeAt()`: Gives you the ASCII numeric code for that character.
 
@@ -729,6 +730,25 @@ console.log(index); // 1
 ```JavaScript
 array.splice(startIndex, itemsToRemove, item1, item2)
 ```
+```JavaScript
+// Using .splice() wap elements at i and j without mutating the original
+let array = [0, 1, 2, 3, 4]
+const copy = array.slice();
+// copy[i] = copy.splice(j, 1, copy[i])[0];
+// array.splice(startIndex, itemsToRemove, item1, item2)
+// Example below: Start at idx 3, remove 1 item (idx 3)
+// Insert idx 2, assign removed item to ith position (idx 2)
+copy[2] = copy.splice(3, 1, copy[2])[0];
+console.log(copy); // swap elements at i and j without mutating the original
+let array = [0, 1, 2, 3, 4]
+const copy = array.slice();
+// copy[i] = copy.splice(j, 1, copy[i])[0];
+// array.splice(startIndex, itemsToRemove, item1, item2)
+// Example below: Start at idx 3, remove 1 item (idx 3)
+// Insert idx 2, assign removed item to ith position (idx 2)
+copy[2] = copy.splice(3, 1, copy[2])[0];
+console.log(copy); // [0, 1, 3, 2, 4]
+```
 
 ```JavaScript
 let fruits = ["apple", "banana", "orange", "mango", "kiwi"];
@@ -1029,3 +1049,160 @@ console.log(data.age);
   let person = createPerson("Charlie", 35);
   console.log(person); // { name: "Charlie", age: 35 }
   ```
+
+## Loops
+
+- For-loop
+  ```JavaScript
+  // Example 1: Basic Syntax
+  for (initialization; condition; increment or decrement) {
+    // code block to be executed
+  }
+
+  // Example 2: Simple incrementer
+  for (let i = 0; i < 5; i++) {
+    console.log(i);
+  }
+  ```
+- `for...of` loop
+  ```JavaScript
+  // Example 1: Basic Syntax
+  for (variable of iterable) {
+  // code block to be executed
+  }
+
+  // Example 2: Simple instantiation
+  const numbers = [1, 2, 3, 4, 5];
+
+  for (const num of numbers) {
+    console.log(num);
+  }
+
+  // Example 3: Looping through an object's properties
+  const fruit = {
+    name: 'apple',
+    color: 'red',
+    price: 0.99
+  };
+
+  for (const prop in fruit) {
+    console.log(fruit[prop]);
+  }
+
+  // Example 4: Nested object looper, with custom func IsObject
+  const person = {
+    name: 'John',
+    age: 30,
+    address: {
+      street: '123 Main St',
+      city: 'Anytown',
+      state: 'CA'
+    }
+  };
+
+  function isObject(obj) {
+    // Need to check for arrays, since arrays are type "object" also
+    // Need to check for null, since nulls are type "object" also
+    return typeof obj === 'object' && !Array.isArray(obj) && obj !== null;
+  }
+
+  for (const prop in person) {
+    if (isObject(person[prop])) {
+      for (const nestedProp in person[prop]) {
+        console.log(person[prop][nestedProp]);
+      }
+    } else {
+      console.log(person[prop]);
+    }
+  }
+  ```
+- While loop
+  ```JavaScript
+  // Example 1: Basic Syntax
+  while (condition) {
+  // code block to be executed
+  }
+
+  // Example 2: Simple instantiation
+  let counter = 0;
+  while(counter < 5) {
+    console.log(counter);
+    counter++;
+  }
+  ```
+- do...while loop
+  
+  Main diff with while loop: Will execute the do block at least once before 
+  checking the condition.
+  ```JavaScript
+  do {
+    // code block to be executed
+  } while (condition);
+
+  // Example 2: Simple instantiation
+  let counter = 0;
+  do {
+    console.log(counter);
+    counter++;
+  } while (counter < 5);  
+  ```
+
+**Break and Continue Statements**
+
+- `break`: Break out of the loop entirely.
+- `continue`: Skip this iteration.
+- labels: Identify which loop to break (Example below)
+
+Examples
+```JavaScript
+// break
+for (let i = 0; i < 10; i++) {
+  if (i === 5) {
+    break;
+  }
+  console.log(i);
+}
+
+// continue
+for (let i = 0; i < 10; i++) {
+  if (i === 5) {
+    continue;
+  }
+  console.log(i);
+}
+
+// break with labels
+outerLoop: for (let i = 0; i < 3; i++) {
+  innerLoop: for (let j = 0; j < 3; j++) {
+    if (i === 1 && j === 1) {
+      break outerLoop;
+    }
+    console.log(`i: ${i}, j: ${j}`);
+  }
+}
+```
+
+**Bubble Sort in JS**
+```JavaScript
+// Outer loop: controls how many passes we make
+for (let i = 0; i < crew.length - 1; i++) {
+  // Inner loop: compares neighboring items
+  for (let j = 0; j < crew.length - 1 - i; j++) {
+    // If current member has lower priority than next, swap
+    if (crew[j].priority < crew[j + 1].priority) {
+      // Using a temp variable for the swap
+        const temp = crew[j];
+        crew[j] = crew[j + 1];
+        crew[j + 1] = temp;
+    }
+  }
+}
+```
+
+- Creating chunks of size `n` from an `array` without changing it. 
+```JavaScript
+const result = [];
+for (let i = 0; i < array.length; i += n) {
+  result.push(array.slice(i, i + n));
+}
+```
