@@ -1227,3 +1227,103 @@ function parseCard(rawString) {
   };
 }
 ```
+
+## Fundementals Review
+
+**String objects =/= Primitive type Strings**
+- Creating a string object
+  ```JavaScript
+  const greetingObject = new String("Hello, World!");
+
+  console.log(typeof greetingObject); // "object"
+  ```
+- String primitives are more memory efficient and faster compared to string objects.
+
+
+**toString() Method**
+
+- Casts a variable to a string type.
+- Accepts an optional argument representing thhe base (radix).
+  ```JavaScript
+  const num = 10;
+  console.log(num.toString(2)); // "1010 <- binary representation of 
+  ```
+- You can use `toString` to convert arrays and objects to strings.
+- For stringified objects, output defaults to `"[object Object]"`
+
+
+**Number()**
+- Used to cast things to numbers.
+  ```JavaScript
+  const myNum = Number("100");
+  console.log(myNum); // 100
+
+  console.log(typeof myNum); // number
+  ```
+- Calling `Number()` on an empty string returns `0`.
+- Calling `Number()` on non-numeric strings returns `NaN`.
+- Calling `Number()` on bools, returns `1` or `0` for `true` and `false` respectively.
+- `null` -> `0`
+- `undefined` -> `NaN`
+- Arrays
+  - `[]` -> `0`
+  - Single number `[7]` -> `7`
+  - Multi-numbers `[1,2]` -> NaN
+- Objects -> `NaN`
+
+**Naming Variables and Functions**
+
+- For Booleans, use prefixes like `is`, `has`, `can`, same for functions that return Booleans (called Predicates)
+  ```JavaScript
+  let isLoading = true;
+  let hasPermission = false;
+  let canEdit = true;
+  ```
+- Function names should clearly indicate the function purpose.
+  ```JavaScript
+  function getUserData(){
+    /* ... */
+  }
+
+  function calculateTotal(){
+    /* ... */
+  }
+
+  function validateInput(){
+    /* ... */
+  }
+  ```
+- Functions that retrieve data commonly start with `get`
+  ```JavaScript
+  function getProductDetails(productId) {
+  /* ... */
+  }
+
+  function getUserProfile(userId) {
+    /* ... */
+  }
+  ```
+- Functions that set data:
+  ```JavaScript
+  function setUserPreferences(preferences) {
+    /* ... */
+  }
+
+  function setPageTitle(title) {
+    /* ... */
+  }
+  ```
+- Functions that are event handlers: (an action that happens after an event, i.e. after a button click)
+  ```JavaScript
+  function handleClick(){
+    /* ... */
+  }
+
+  function onSubmit(){
+    /* ... */
+  }
+
+  function keyPressHandler(){
+    /* ... */
+  }
+  ```
