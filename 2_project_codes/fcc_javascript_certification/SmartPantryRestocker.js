@@ -27,16 +27,17 @@ function parseShipment(rawData) {
         let qty = Number(inputArray[2]); 
         let expires = inputArray[3]; 
         let zone = inputArray[4] || "general"; 
-        if (!existingSku.includes(sku)) {
-            existingSku.push(sku);
-            objectArray.push({
-                sku: sku,
-                name: name,
-                qty: qty,
-                expires: expires ,
-                zone: zone
-                })
+        if (existingSku.includes(sku)) {
+            continue;
         }
+        existingSku.push(sku);
+        objectArray.push({
+            sku: sku,
+            name: name,
+            qty: qty,
+            expires: expires ,
+            zone: zone
+            })
     }
 
     return objectArray
@@ -82,9 +83,9 @@ function groupByZone(actions) {
     for (let action of actions) {
         let zone = action.item.zone;
         if (!zones.hasOwnProperty(zone)) {
-            zones[zone] = [action.item];
+            zones[zone] = [action];
         } else {
-            zones[zone].push(action.item)
+            zones[zone].push(action)
         }
         if (action.item.sku == "B02") {
         }
@@ -120,27 +121,23 @@ function clonePantry(pantry) {
 // console.log("Cloned Pantry: " + clonedPantry);
 // // console.log("Parsed Pantry: " + parsedPantry);
 
-const shipment = [
-  "A10|Tomatoes|5|2027-01-01|fridge1",
-  "B02|Milk|2|2026-05-30|fridge1",
-  "C15|Pasta|10|2028-12-15|",
-  "A10|Tomatoes|5|2027-01-01|fridge2",
-  "B03|Cheese|5|2024-01-01|fridge3",
-  "B04|Cheese|5|2027-01-01|fridge3",
+const rawData = [
+  "A10|Tomatoes|5|2027-01-01", // Restock existing item
+  "B21|Bananas|10|2027-01-01", // Donate new item without zone
+  "C32|Eggs|3|2027-01-01|fridge", // Donate to a defined zone
+  "C32|Eggs|3|2027-01-01", // Duplicated SKU in shipment
+  "D43|Pineapples|0|2027-01-01", // Discard with quantity of 0
+  "E54|Peppers|-1|2027-01-01|fridge" // Discard even if it's not in pantry
 ];
 
-const pantry =   [
-  "A10|Tomatoes|5|2027-01-01|fridge",
-  "B02|Milk|2|2026-05-30|fridge",
-  "C15|Pasta|10|2028-12-15|",
-  "A10|Tomatoes|5|2027-01-01|fridge",
+const pantry = [
+  { sku: "A10", name: "Tomatoes", qty: 4, expires: "2027-01-01", zone: "fridge" },
+  { sku: "D43", name: "Pineapples", qty: 2, expires: "2020-01-01", zone: "general" }
 ];
 
-let parsedPantry = parseShipment(pantry);
-let parsedShipment = parseShipment(shipment);
-let actions = planRestock(parsedPantry, parsedShipment);
-let groupedActions = groupByZone(actions);
-console.log(actions);
+const parsedShipment = parseShipment(rawData, true); 
 
-console.log("groupedActions");
+const actions = planRestock(pantry, parsedShipment);
+const groupedActions = groupByZone(actions);
+
 console.log(groupedActions);
