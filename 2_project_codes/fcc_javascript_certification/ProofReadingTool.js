@@ -37,41 +37,29 @@ function findRepeatedPhrases(words, phraseLength) {
     if (phraseLength > words.Length) {
         return []
     }
-    let startIdx = [];
-    let phrase = words.slice(0, phraseLength);
-    for (let i = phraseLength; i < words.length; i++) {
-        let newPhrase = words.slice(i, i + phraseLength);
-        console.log(phrase, newPhrase);
-        if (JSON.stringify(phrase) === JSON.stringify(newPhrase)) {
-            if (startIdx.length === 0) {
-                startIdx.push(0);
-            }
-            startIdx.push(i);
+    let wordsTracker = {};
+    for (let i = 0; i < words.length; i++) {
+        let word = words[i]
+        if (!Object.hasOwn(wordsTracker, word)) {
+            wordsTracker[word] = {idx:[i],
+                                  count: 1}
+        }
+        else {
+            // Update idx
+            wordsTracker[word]["idx"].push(i)
+            // Update count
+            wordsTracker[word]["count"] += 1
         }
     }
-    return startIdx
-}
-
-function findRepeatedPhrasesV2(words, phraseLength) {
-    if (phraseLength > words.Length) {
-        return []
-    }
-    let startIdx = [];
-    let phrases = [] // TBC
-    let phrase = words.slice(0, phraseLength);
-    for (let i = phraseLength; i < words.length; i++) {
-        let newPhrase = words.slice(i, i + phraseLength);
-        console.log(phrase, newPhrase);
-        if (JSON.stringify(phrase) === JSON.stringify(newPhrase)) {
-            if (startIdx.length === 0) {
-                startIdx.push(0);
-            }
-            startIdx.push(i);
+    let collated_idx = []
+    for (const uniqueWord in wordsTracker) {
+        if (wordsTracker[uniqueWord]["count"] > 1) {
+            collated_idx = collated_idx.concat(wordsTracker[uniqueWord]["idx"])
         }
     }
-    return startIdx
+    collated_idx.sort()
+    return collated_idx
 }
-
 
 // let words = ['abc', 'abc', 'abc', 
 //              'hij', 'hij', 'hij',
@@ -96,6 +84,7 @@ function analyzeTexts(texts, phraseLength) {
     return proofReadObjects
 }
 
-console.log(analyzeTexts([["racecar", "hello", "level", "hello"]], 1));
-
-console.log(findRepeatedPhrases(["racecar", "hello", "level", "hello"], 1))
+// console.log(analyzeTexts([["racecar", "hello", "level", "hello"]], 1));
+const words = ["the", "cat", "the", "cat", "the", "cat"];
+const phraseLength = 2;
+console.log(findRepeatedPhrases(words, phraseLength))
